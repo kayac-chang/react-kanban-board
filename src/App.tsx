@@ -1,6 +1,6 @@
 import { Column, Task } from "./components";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { move } from "ramda";
+import { move, propEq } from "ramda";
 import { useState } from "react";
 
 const initialData = {

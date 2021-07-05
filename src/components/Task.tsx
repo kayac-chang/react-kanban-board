@@ -1,4 +1,5 @@
 import { Draggable } from "react-beautiful-dnd";
+import clsx from "clsx";
 
 type Props = {
   id: string;
@@ -8,9 +9,9 @@ type Props = {
 export function Task({ id, index, content }: Props) {
   return (
     <Draggable draggableId={id} index={index}>
-      {({ draggableProps, dragHandleProps, innerRef }) => (
+      {({ draggableProps, dragHandleProps, innerRef }, snapshot) => (
         <div
-          className="border p-2"
+          className={clsx("border p-2", snapshot.isDragging && "bg-green-300")}
           {...draggableProps}
           {...dragHandleProps}
           ref={innerRef}
