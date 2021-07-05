@@ -1,5 +1,7 @@
 import { Column, Task } from "./components";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { move } from "ramda";
+import { useState } from "react";
 
 const initialData = {
   tasks: [
@@ -19,26 +21,45 @@ const initialData = {
 };
 
 function App() {
-  const { columnOrder, columns, tasks } = initialData;
+  const { columnOrder, tasks } = initialData;
+
+  const [columns, setColumns] = useState(initialData.columns);
+
+  function onDragEnd(result: DropResult) {
+    const { source, destination } = result;
+
+    if (!destination) return;
+
+    setColumns(
+      columns.map((column) =>
+        column.id === destination.droppableId
+          ? {
+              ...column,
+              taskIds: move(source.index, destination.index, column.taskIds),
+            }
+          : column
+      )
+    );
+  }
 
   return (
-    <DragDropContext onDragEnd={() => {}}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div className="w-full h-full p-2">
-        {columnOrder.map((id) => {
-          const column = columns.find((col) => id === col.id);
-          if (!column) return <></>;
-
-          const { title, taskIds } = column;
-          return (
-            <Column key={id} title={title}>
-              {tasks
-                .filter((task) => taskIds.includes(task.id))
-                .map((task, index) => (
-                  <Task key={task.id} index={index} {...task} />
-                ))}
-            </Column>
-          );
-        })}
+        {columnOrder
+          .map((id) => columns.find((col) => id === col.id))
+          .map(
+            (column) =>
+              column && (
+                <Column key={column.id} id={column.id} title={column.title}>
+                  {column.taskIds
+                    .map((id) => tasks.find((task) => task.id === id))
+                    .map(
+                      (task, index) =>
+                        task && <Task key={task.id} index={index} {...task} />
+                    )}
+                </Column>
+              )
+          )}
       </div>
     </DragDropContext>
   );
