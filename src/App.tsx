@@ -1,6 +1,6 @@
 import { Column, Task } from "./components";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { move, propEq } from "ramda";
+import { cond, identity, insert, map, move, propEq, remove, T } from "ramda";
 import { useState } from "react";
 
 const initialData = {
@@ -16,8 +16,18 @@ const initialData = {
       title: "To do",
       taskIds: ["task-1", "task-2", "task-3", "task-4"],
     },
+    {
+      id: "column-2",
+      title: "In progress",
+      taskIds: [],
+    },
+    {
+      id: "column-3",
+      title: "Done",
+      taskIds: [],
+    },
   ],
-  columnOrder: ["column-1"],
+  columnOrder: ["column-1", "column-2", "column-3"],
 };
 
 function App() {
@@ -30,29 +40,59 @@ function App() {
 
     if (!destination) return;
 
+    const column = columns.find(propEq("id", source.droppableId));
+    if (!column) return;
+
     setColumns(
-      columns.map((column) =>
-        column.id === destination.droppableId
-          ? {
-              ...column,
-              taskIds: move(source.index, destination.index, column.taskIds),
-            }
-          : column
+      map(
+        cond([
+          [
+            () => source.droppableId === destination.droppableId,
+            (col) => ({
+              ...col,
+              taskIds: move(source.index, destination.index, col.taskIds),
+            }),
+          ],
+          [
+            (col) => col.id === source.droppableId,
+            (col) => ({
+              ...col,
+              taskIds: remove(source.index, 1, col.taskIds),
+            }),
+          ],
+          [
+            (col) => col.id === destination.droppableId,
+            (col) => ({
+              ...col,
+              taskIds: insert(
+                destination.index,
+                column.taskIds[source.index],
+                col.taskIds
+              ),
+            }),
+          ],
+          [T, identity],
+        ])
       )
     );
   }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="w-full h-full p-2">
+      <div className="w-full h-full p-2 flex">
         {columnOrder
-          .map((id) => columns.find((col) => id === col.id))
+          .map((id) => columns.find(propEq("id", id)))
           .map(
             (column) =>
               column && (
-                <Column key={column.id} id={column.id} title={column.title}>
+                <Column
+                  key={column.id}
+                  id={column.id}
+                  title={column.title}
+                  className="w-60"
+                >
                   {column.taskIds
-                    .map((id) => tasks.find((task) => task.id === id))
+                    .map((id) => tasks.find(propEq("id", id)))
                     .map(
                       (task, index) =>
                         task && <Task key={task.id} index={index} {...task} />
