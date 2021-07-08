@@ -1,5 +1,5 @@
 import { Column, Task } from "./components";
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import { cond, identity, insert, map, move, propEq, remove, T } from "ramda";
 import { useState } from "react";
 
@@ -31,17 +31,27 @@ const initialData = {
 };
 
 function App() {
-  const { columnOrder, tasks } = initialData;
+  const { tasks } = initialData;
 
+  const [columnOrder, setColumnOrder] = useState(initialData.columnOrder);
   const [columns, setColumns] = useState(initialData.columns);
 
   function onDragEnd(result: DropResult) {
-    const { source, destination } = result;
+    const { source, destination, type } = result;
 
     if (!destination) return;
 
-    const column = columns.find(propEq("id", source.droppableId));
-    if (!column) return;
+    if (type === "Column") {
+      setColumnOrder(move(source.index, destination.index));
+
+      return;
+    }
+
+    const target = columns.find(propEq("id", source.droppableId))?.taskIds[
+      source.index
+    ];
+
+    if (!target) return;
 
     setColumns(
       map(
@@ -64,11 +74,7 @@ function App() {
             (col) => col.id === destination.droppableId,
             (col) => ({
               ...col,
-              taskIds: insert(
-                destination.index,
-                column.taskIds[source.index],
-                col.taskIds
-              ),
+              taskIds: insert(destination.index, target, col.taskIds),
             }),
           ],
           [T, identity],
@@ -79,28 +85,41 @@ function App() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="w-full h-full p-2 flex">
-        {columnOrder
-          .map((id) => columns.find(propEq("id", id)))
-          .map(
-            (column) =>
-              column && (
-                <Column
-                  key={column.id}
-                  id={column.id}
-                  title={column.title}
-                  className="w-60"
-                >
-                  {column.taskIds
-                    .map((id) => tasks.find(propEq("id", id)))
-                    .map(
-                      (task, index) =>
-                        task && <Task key={task.id} index={index} {...task} />
-                    )}
-                </Column>
-              )
-          )}
-      </div>
+      <Droppable droppableId="root" direction="horizontal" type="Column">
+        {({ innerRef, droppableProps, placeholder }) => (
+          <div
+            className="w-full h-full p-2 flex gap-4"
+            ref={innerRef}
+            {...droppableProps}
+          >
+            {columnOrder
+              .map((id) => columns.find(propEq("id", id)))
+              .map(
+                (column, index) =>
+                  column && (
+                    <Column
+                      key={column.id}
+                      id={column.id}
+                      index={index}
+                      title={column.title}
+                      className="w-60"
+                    >
+                      {column.taskIds
+                        .map((id) => tasks.find(propEq("id", id)))
+                        .map(
+                          (task, index) =>
+                            task && (
+                              <Task key={task.id} index={index} {...task} />
+                            )
+                        )}
+                    </Column>
+                  )
+              )}
+
+            {placeholder}
+          </div>
+        )}
+      </Droppable>
     </DragDropContext>
   );
 }
