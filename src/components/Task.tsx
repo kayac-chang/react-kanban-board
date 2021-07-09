@@ -5,13 +5,14 @@ type Props = {
   id: string;
   index: number;
   content: string;
+  className?: string;
 };
-export function Task({ id, index, content }: Props) {
+export function Task({ id, index, content, className }: Props) {
   return (
     <Draggable draggableId={id} index={index}>
-      {({ draggableProps, dragHandleProps, innerRef }, snapshot) => (
+      {({ draggableProps, dragHandleProps, innerRef }) => (
         <div
-          className={clsx("border p-2", snapshot.isDragging && "bg-green-300")}
+          className={clsx("p-2", className)}
           {...draggableProps}
           {...dragHandleProps}
           ref={innerRef}

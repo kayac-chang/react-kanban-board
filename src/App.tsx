@@ -88,7 +88,7 @@ function App() {
       <Droppable droppableId="root" direction="horizontal" type="Column">
         {({ innerRef, droppableProps, placeholder }) => (
           <div
-            className="w-full h-full p-2 flex gap-4"
+            className="w-full h-full p-2 flex gap-4 "
             ref={innerRef}
             {...droppableProps}
           >
@@ -101,15 +101,25 @@ function App() {
                       key={column.id}
                       id={column.id}
                       index={index}
-                      title={column.title}
-                      className="w-60"
+                      title={
+                        <h3 className="bg-blue text-white text-center py-1">
+                          {column.title}
+                        </h3>
+                      }
+                      className="w-80 rounded overflow-hidden bg-gray-fill shadow"
+                      containerClassName="py-4 px-2 space-y-4"
                     >
                       {column.taskIds
                         .map((id) => tasks.find(propEq("id", id)))
                         .map(
                           (task, index) =>
                             task && (
-                              <Task key={task.id} index={index} {...task} />
+                              <Task
+                                key={task.id}
+                                index={index}
+                                className="bg-white rounded shadow-md"
+                                {...task}
+                              />
                             )
                         )}
                     </Column>
