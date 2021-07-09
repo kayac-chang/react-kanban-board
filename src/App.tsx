@@ -13,9 +13,12 @@ const initialData = {
     },
     {
       id: "task-2",
-      title: "Watch my favorite show",
+      device:"Android",
+      title: "Icon for Customer Portal announcement is shown",
       date: new Date(),
-      content: "Pilot version with Lottie",
+      link1:"Document Link",
+      link2:"Project Link",
+      content: "Guna",
     },
     {
       id: "task-3",
