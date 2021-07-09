@@ -1,38 +1,28 @@
-import clsx from "clsx";
 import { ReactNode } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 type Props = {
   id: string;
-  title: ReactNode;
+  title: string;
   children: ReactNode;
   index: number;
-  className?: string;
-  containerClassName?: string;
 };
-export function Column({
-  id,
-  title,
-  index,
-  children,
-  className,
-  containerClassName,
-}: Props) {
+export function Column({ id, title, index, children }: Props) {
   return (
     <Draggable draggableId={id} index={index}>
       {({ draggableProps, dragHandleProps, innerRef }) => (
         <div
-          className={clsx("flex flex-col", className)}
+          className="flex flex-col w-80 rounded overflow-hidden bg-gray-fill shadow"
           {...draggableProps}
           {...dragHandleProps}
           ref={innerRef}
         >
-          {title}
+          <h2 className="bg-blue text-white text-center py-1">{title}</h2>
 
           <Droppable droppableId={id} type="Task">
             {({ innerRef, droppableProps, placeholder }) => (
               <div
-                className={clsx("flex-1", containerClassName)}
+                className="flex-1 py-4 px-2 space-y-4"
                 ref={innerRef}
                 {...droppableProps}
               >

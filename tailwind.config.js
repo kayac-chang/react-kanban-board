@@ -9,7 +9,9 @@ module.exports = {
       gray: {
         fill: "#F8F8F9",
         stroke: "#E4E4E4",
+        text: "#80878F",
       },
+      black: "#000000",
     },
   },
   variants: {

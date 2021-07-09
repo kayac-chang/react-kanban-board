@@ -5,10 +5,30 @@ import { useState } from "react";
 
 const initialData = {
   tasks: [
-    { id: "task-1", content: "Take out the garbage" },
-    { id: "task-2", content: "Watch my favorite show" },
-    { id: "task-3", content: "Charge my phone" },
-    { id: "task-4", content: "Cook dinner" },
+    {
+      id: "task-1",
+      title: "Take out the garbage",
+      date: new Date(),
+      content: "Pilot version with Lottie",
+    },
+    {
+      id: "task-2",
+      title: "Watch my favorite show",
+      date: new Date(),
+      content: "Pilot version with Lottie",
+    },
+    {
+      id: "task-3",
+      title: "Charge my phone",
+      date: new Date(),
+      content: "Pilot version with Lottie",
+    },
+    {
+      id: "task-4",
+      title: "Cook dinner",
+      date: new Date(),
+      content: "Pilot version with Lottie",
+    },
   ],
   columns: [
     {
@@ -97,29 +117,13 @@ function App() {
               .map(
                 (column, index) =>
                   column && (
-                    <Column
-                      key={column.id}
-                      id={column.id}
-                      index={index}
-                      title={
-                        <h3 className="bg-blue text-white text-center py-1">
-                          {column.title}
-                        </h3>
-                      }
-                      className="w-80 rounded overflow-hidden bg-gray-fill shadow"
-                      containerClassName="py-4 px-2 space-y-4"
-                    >
+                    <Column key={column.id} index={index} {...column}>
                       {column.taskIds
                         .map((id) => tasks.find(propEq("id", id)))
                         .map(
                           (task, index) =>
                             task && (
-                              <Task
-                                key={task.id}
-                                index={index}
-                                className="bg-white rounded shadow-md"
-                                {...task}
-                              />
+                              <Task key={task.id} index={index} {...task} />
                             )
                         )}
                     </Column>
