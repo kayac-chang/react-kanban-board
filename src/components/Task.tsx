@@ -1,5 +1,7 @@
 import { Draggable } from "react-beautiful-dnd";
 import { format } from "date-fns";
+import iconLink from "./src/images/link_blank_24dp.png";
+import iconStar from "./src/images/star_24dp.png";
 
 type Props = {
   id: string;
@@ -7,8 +9,7 @@ type Props = {
   index: number;
   title: string;
   date: Date;
-  link1: string;
-  link2: string;
+  links: string[];
   content: string;
 };
 export function Task({ id, index, ...task }: Props) {
@@ -22,10 +23,10 @@ export function Task({ id, index, ...task }: Props) {
           ref={innerRef}
         >
          
-          <div>
-            <span className="bg-blue rounded shadow-md p-1 text-sm text-white">{task.device}</span>
-          </div>
           <header className="flex justify-between items-end">
+            <div>
+              <span className="bg-blue rounded shadow-md p-1 text-sm text-white">{task.device}</span>
+            </div>
             <strong className="text-base text-black font-medium">
               {task.title}
             </strong>
@@ -34,11 +35,11 @@ export function Task({ id, index, ...task }: Props) {
           <div>
             <ul>
               <li>
-                <img className="inline-block box-border h-5 w-5" src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fff307fed-4664-46b0-8de1-6fdcc1e937b2%2FNotion-logo.png?table=block&id=83715d77-03ee-4b86-99b5-e659a4712dd8&spaceId=e12b42ac-4e54-476f-a4f5-7d6bdb1e61e2&width=250&userId=&cache=v2"/>
-                <a className="inline-block ml-2 underline" href="https://www.figma.com/" target="_blank" >{task.link1}</a>
+                <img className="inline-block box-border h-5 w-5" src={iconLink} alt="iconLink" />
+                <a className="inline-block ml-2 underline" href="https://www.figma.com/" target="_blank" >{task.links[0]}</a>
               </li>
               <li>
-                <img className="inline-block box-border h-5 w-5" src="https://img.icons8.com/color/452/medieval-crown.png"/>
+                <img className="inline-block box-border h-5 w-5" src={iconStar} alt="iconStar"/>
                 <p className="inline-block ml-2">{task.content}</p>
               </li>
             </ul>

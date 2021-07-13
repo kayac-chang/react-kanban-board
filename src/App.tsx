@@ -10,7 +10,7 @@ const initialData = {
       device:"iOS", 
       title: "Take out the garbage",
       date: new Date(),
-      link1:"Document Link →",
+      links:"Document Link →",
       content: "Pilot",
     },
     {
@@ -18,7 +18,7 @@ const initialData = {
       device:"Android",
       title: "Watch my favorite show",
       date: new Date(),
-      link1:"Document Link →",
+      links:"Document Link →",
       content: "Guna",
     },
     {
@@ -26,7 +26,7 @@ const initialData = {
       device:"Android",    
       title: "Charge my phone",
       date: new Date(),
-      link1:"Document Link →",
+      links:"Document Link →",
       content: "Lottie",
     },
     {
@@ -34,7 +34,7 @@ const initialData = {
       device:"Android",
       title: "Cook dinner",
       date: new Date(),
-      link1:"Document Link →",
+      links:"Document Link →",
       content: "Pilot version with Lottie",
     },
   ],
