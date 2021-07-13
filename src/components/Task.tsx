@@ -1,7 +1,7 @@
 import { Draggable } from "react-beautiful-dnd";
 import { format } from "date-fns";
-import iconLink from "./src/images/link_blank_24dp.png";
-import iconStar from "./src/images/star_24dp.png";
+import iconLink from "./images/iconLink.png";
+import iconStar from "./images/iconStar.png";
 
 type Props = {
   id: string;
@@ -23,20 +23,18 @@ export function Task({ id, index, ...task }: Props) {
           ref={innerRef}
         >
          
-          <header className="flex justify-between items-end">
-            <div>
-              <span className="bg-blue rounded shadow-md p-1 text-sm text-white">{task.device}</span>
-            </div>
-            <strong className="text-base text-black font-medium">
+          <header className="grid grid-rows-2 grid-flow-col gap-3 justify-between items-end">
+            <span className="col-span-1 bg-blue rounded shadow-md p-1 text-sm text-white">{task.device}</span>
+            <strong className="row-span-1 col-span-2 text-base text-black font-medium">
               {task.title}
             </strong>
-            <span>{format(task.date, "MMM dd")}</span>
+            <span className="row-span-2">{format(task.date, "MMM dd")}</span>
           </header>
           <div>
             <ul>
               <li>
                 <img className="inline-block box-border h-5 w-5" src={iconLink} alt="iconLink" />
-                <a className="inline-block ml-2 underline" href="https://www.figma.com/" target="_blank" >{task.links[0]}</a>
+                <a className="inline-block ml-2 underline" href="https://www.figma.com/" target="_blank" >{task.links}</a>
               </li>
               <li>
                 <img className="inline-block box-border h-5 w-5" src={iconStar} alt="iconStar"/>
