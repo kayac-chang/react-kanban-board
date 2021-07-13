@@ -10,48 +10,56 @@ const initialData = {
       title: "Take out the garbage",
       date: new Date(),
       content: "Pilot version with Lottie",
-      owner: 'Sathish',
-      links: [{
-        title: 'Document Link',
-        url: 'https://www.notion.so/'
-      }],
-      tags: ['iOS', 'Android']
+      owner: "Sathish",
+      links: [
+        {
+          title: "Document Link",
+          url: "https://www.notion.so/",
+        },
+      ],
+      tags: ["iOS", "Android"],
     },
     {
       id: "task-2",
       title: "Watch my favorite show",
       date: new Date(),
       content: "Pilot version with Lottie",
-      owner: 'Guna',
-      links: [{
-        title: 'Document Link',
-        url: 'https://www.notion.so/'
-      }],
-      tags: ['iOS']
+      owner: "Guna",
+      links: [
+        {
+          title: "Document Link",
+          url: "https://www.notion.so/",
+        },
+      ],
+      tags: ["iOS"],
     },
     {
       id: "task-3",
       title: "Charge my phone",
       date: new Date(),
       content: "Pilot version with Lottie",
-      owner: 'Gura',
-      links: [{
-        title: 'Document Link',
-        url: 'https://www.notion.so/'
-      }],
-      tags: ['Web']
+      owner: "Gura",
+      links: [
+        {
+          title: "Document Link",
+          url: "https://www.notion.so/",
+        },
+      ],
+      tags: ["Web"],
     },
     {
       id: "task-4",
       title: "Cook dinner",
       date: new Date(),
       content: "Pilot version with Lottie",
-      owner: 'Sathish',
-      links: [{
-        title: 'Document Link',
-        url: 'https://www.notion.so/'
-      }],
-      tags: ['Desktop']
+      owner: "Sathish",
+      links: [
+        {
+          title: "Document Link",
+          url: "https://www.notion.so/",
+        },
+      ],
+      tags: ["Desktop"],
     },
   ],
   columns: [
