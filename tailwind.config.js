@@ -4,7 +4,10 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
-      blue: "#1C5A7C",
+      blue: {
+        default: "#1C5A7C",
+        web: "#4765B0",
+      },
       white: "#ffffff",
       gray: {
         fill: "#F8F8F9",
@@ -12,6 +15,7 @@ module.exports = {
         text: "#80878F",
       },
       black: "#000000",
+      brown: "#CB9647",
     },
   },
   variants: {
