@@ -1,7 +1,7 @@
 import { Draggable } from "react-beautiful-dnd";
 import { format } from "date-fns";
-import linkIcon from "../assets/image/Notion.svg"
-import ownerIcon from "../assets/image/Owner Icon.svg"
+import linkIcon from "../assets/image/Notion.png"
+import ownerIcon from "../assets/image/Owner Icon.png"
 
 type Props = {
   id: string;
@@ -14,7 +14,13 @@ type Props = {
   author: string;
 };
 export function Task({ id, index, ...task }: Props) {
-let osList = task.os.map((item) => (<span key={index} className={`rounded-md py-0.5 px-1 mr-2 ${item=='ios'?'bg-black':''} ${item=='Web'?'bg-blue_web':''} ${item=='Desktop'?'bg-brown':''}`}>{item}</span>))
+  let osList = task.os.map((item) => (
+  <span key={index} className={
+    `rounded-md py-0.5 px-1 mr-2 
+    ${item == 'ios' ? 'bg-black' : ''} 
+    ${item == 'Web' ? 'bg-blue-web' : ''} 
+    ${item == 'Desktop' ? 'bg-brown' : ''}`
+  }>{item}</span>))
   return (
     <Draggable draggableId={id} index={index}>
       {({ draggableProps, dragHandleProps, innerRef }) => (
@@ -32,14 +38,28 @@ let osList = task.os.map((item) => (<span key={index} className={`rounded-md py-
               {task.title}
             </strong>
 
-            <span>{format(task.date, "MMM dd")}</span>
+            <span>
+              {format(task.date, "MMM dd")}
+            </span>
           </header>
 
           <p className="mb-2">{task.content}</p>
           <div className="flex mb-2">
-            <a href={task.link} className="underline"><img className="h-4 mr-1 inline-block" src={linkIcon} alt="linkIcon" />Document Link →</a>
+            <a href={task.link} 
+            className="underline"
+            >
+              <img className="h-4 mr-1 inline-block" 
+              src={linkIcon} 
+              alt="linkIcon" />
+              Document Link →
+            </a>
           </div>
-          <p><img className="h-4 mr-1 inline-block" src={ownerIcon} alt="ownerIcon" />{task.author}</p>
+          <p>
+            <img className="h-4 mr-1 inline-block" 
+            src={ownerIcon} 
+            alt="ownerIcon" />
+            {task.author}
+          </p>
         </article>
       )}
     </Draggable>

@@ -4,8 +4,10 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
-      blue: "#1C5A7C",
-      blue_web: "#4765B0",
+      blue: {
+        default: "#1C5A7C",
+        web: "#4765B0",
+      },
       white: "#ffffff",
       gray: {
         fill: "#F8F8F9",
