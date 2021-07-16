@@ -1,7 +1,7 @@
 import { Draggable } from "react-beautiful-dnd";
 import { format } from "date-fns";
 import linkIcon from "../assets/image/Notion.png"
-import ownerIcon from "../assets/image/Owner Icon.png"
+import ownerIcon from "../assets/image/Owner_Icon.png"
 
 type Props = {
   id: string;
