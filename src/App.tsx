@@ -7,39 +7,63 @@ const initialData = {
   tasks: [
     {
       id: "task-1",
-      os: ['ios','Web','Desktop'],
+      os: ["ios", "Web", "Desktop"],
       title: "Take out the garbage",
       date: new Date(),
       content: "Pilot version with Lottie",
-      link: "https://www.google.com",
-      author: "Guna",
+      owner: "Sathish",
+      links: [
+        {
+          title: "Document Link",
+          url: "https://www.notion.so/",
+        },
+      ],
+      tags: ["iOS", "Android"],
     },
     {
       id: "task-2",
-      os: ['ios','Desktop'],
+      os: ["ios", "Desktop"],
       title: "Watch my favorite show",
       date: new Date(),
       content: "Pilot version with Lottie",
-      link: "https://www.google.com",
-      author: "Guna",
+      owner: "Guna",
+      links: [
+        {
+          title: "Document Link",
+          url: "https://www.notion.so/",
+        },
+      ],
+      tags: ["iOS"],
     },
     {
       id: "task-3",
-      os: ['ios'],
+      os: ["ios"],
       title: "Charge my phone",
       date: new Date(),
       content: "Pilot version with Lottie",
-      link: "https://www.google.com",
-      author: "Guna",
+      owner: "Gura",
+      links: [
+        {
+          title: "Document Link",
+          url: "https://www.notion.so/",
+        },
+      ],
+      tags: ["Web"],
     },
     {
       id: "task-4",
-      os: ['ios'],
+      os: ["ios"],
       title: "Cook dinner",
       date: new Date(),
       content: "Pilot version with Lottie",
-      link: "https://www.google.com",
-      author: "Guna",
+      owner: "Sathish",
+      links: [
+        {
+          title: "Document Link",
+          url: "https://www.notion.so/",
+        },
+      ],
+      tags: ["Desktop"],
     },
   ],
   columns: [

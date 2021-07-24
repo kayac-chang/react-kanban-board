@@ -1,7 +1,7 @@
 import { Draggable } from "react-beautiful-dnd";
 import { format } from "date-fns";
-import linkIcon from "../assets/image/Notion.png"
-import ownerIcon from "../assets/image/Owner_Icon.png"
+import ownerSvg from "../assets/images/owner.svg";
+import linkSvg from "../assets/images/link.svg";
 
 type Props = {
   id: string;
@@ -10,56 +10,64 @@ type Props = {
   title: string;
   date: Date;
   content: string;
-  link: string;
-  author: string;
+  owner: string;
+  links: { title: string; url: string }[];
+  tags: string[];
 };
+
 export function Task({ id, index, ...task }: Props) {
   let osList = task.os.map((item) => (
-  <span key={index} className={
-    `rounded-md py-0.5 px-1 mr-2 
-    ${item == 'ios' ? 'bg-black' : ''} 
-    ${item == 'Web' ? 'bg-blue-web' : ''} 
-    ${item == 'Desktop' ? 'bg-brown' : ''}`
-  }>{item}</span>))
+    <span
+      key={index}
+      className={`rounded-md py-0.5 px-1 mr-2 
+    ${item == "ios" ? "bg-black" : ""} 
+    ${item == "Web" ? "bg-blue-web" : ""} 
+    ${item == "Desktop" ? "bg-brown" : ""}`}
+    >
+      {item}
+    </span>
+  ));
   return (
     <Draggable draggableId={id} index={index}>
       {({ draggableProps, dragHandleProps, innerRef }) => (
         <article
-          className="bg-white rounded shadow-md p-3 text-sm text-gray-text"
+          className="bg-white rounded shadow-md p-3 flex flex-col gap-2 text-sm text-gray-text"
           {...draggableProps}
           {...dragHandleProps}
           ref={innerRef}
         >
-          <div className="flex text-white mb-2">
-            {osList}
-          </div>
-          <header className="flex justify-between items-end mb-2">
+          <p className="flex gap-2 text-white">
+            {task.tags.map((tag) => (
+              <span className="bg-blue rounded-md py-0.5 px-2">{tag}</span>
+            ))}
+          </p>
+          <header className="flex justify-between items-end">
             <strong className="text-base text-black font-medium">
               {task.title}
             </strong>
 
-            <span>
-              {format(task.date, "MMM dd")}
-            </span>
+            <span>{format(task.date, "MMM dd")}</span>
           </header>
 
-          <p className="mb-2">{task.content}</p>
-          <div className="flex mb-2">
-            <a href={task.link} 
-            className="underline"
-            >
-              <img className="h-4 mr-1 inline-block" 
-              src={linkIcon} 
-              alt="linkIcon" />
-              Document Link →
-            </a>
-          </div>
-          <p>
-            <img className="h-4 mr-1 inline-block" 
-            src={ownerIcon} 
-            alt="ownerIcon" />
-            {task.author}
-          </p>
+          <p className="text-xs">{task.content}</p>
+
+          <footer className="flex flex-col gap-2">
+            <ul className="underline">
+              {task.links.map((link) => (
+                <li className="">
+                  <a className="flex gap-1 items-center" href={link.url}>
+                    <img src={linkSvg} alt="" />
+                    {link.title} →
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <span className="flex gap-1 items-center">
+              <img src={ownerSvg} alt="" />
+              {task.owner}
+            </span>
+          </footer>
         </article>
       )}
     </Draggable>
