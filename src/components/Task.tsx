@@ -6,6 +6,7 @@ import linkSvg from "../assets/images/link.svg";
 type Props = {
   id: string;
   index: number;
+  os: Array<string>;
   title: string;
   date: Date;
   content: string;
@@ -15,6 +16,17 @@ type Props = {
 };
 
 export function Task({ id, index, ...task }: Props) {
+  let osList = task.os.map((item) => (
+    <span
+      key={index}
+      className={`rounded-md py-0.5 px-1 mr-2 
+    ${item == "ios" ? "bg-black" : ""} 
+    ${item == "Web" ? "bg-blue-web" : ""} 
+    ${item == "Desktop" ? "bg-brown" : ""}`}
+    >
+      {item}
+    </span>
+  ));
   return (
     <Draggable draggableId={id} index={index}>
       {({ draggableProps, dragHandleProps, innerRef }) => (

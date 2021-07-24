@@ -7,6 +7,7 @@ const initialData = {
   tasks: [
     {
       id: "task-1",
+      os: ["ios", "Web", "Desktop"],
       title: "Take out the garbage",
       date: new Date(),
       content: "Pilot version with Lottie",
@@ -21,6 +22,7 @@ const initialData = {
     },
     {
       id: "task-2",
+      os: ["ios", "Desktop"],
       title: "Watch my favorite show",
       date: new Date(),
       content: "Pilot version with Lottie",
@@ -35,6 +37,7 @@ const initialData = {
     },
     {
       id: "task-3",
+      os: ["ios"],
       title: "Charge my phone",
       date: new Date(),
       content: "Pilot version with Lottie",
@@ -49,6 +52,7 @@ const initialData = {
     },
     {
       id: "task-4",
+      os: ["ios"],
       title: "Cook dinner",
       date: new Date(),
       content: "Pilot version with Lottie",
