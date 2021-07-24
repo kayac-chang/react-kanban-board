@@ -2,93 +2,10 @@ import { Column, Task } from "./components";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import { cond, identity, insert, map, move, propEq, remove, T } from "ramda";
 import { useState } from "react";
-
-const initialData = {
-  tasks: [
-    {
-      id: "task-1",
-      os: ["ios", "Web", "Desktop"],
-      title: "Take out the garbage",
-      date: new Date(),
-      content: "Pilot version with Lottie",
-      owner: "Sathish",
-      links: [
-        {
-          title: "Document Link",
-          url: "https://www.notion.so/",
-        },
-      ],
-      tags: ["iOS", "Android"],
-    },
-    {
-      id: "task-2",
-      os: ["ios", "Desktop"],
-      title: "Watch my favorite show",
-      date: new Date(),
-      content: "Pilot version with Lottie",
-      owner: "Guna",
-      links: [
-        {
-          title: "Document Link",
-          url: "https://www.notion.so/",
-        },
-      ],
-      tags: ["iOS"],
-    },
-    {
-      id: "task-3",
-      os: ["ios"],
-      title: "Charge my phone",
-      date: new Date(),
-      content: "Pilot version with Lottie",
-      owner: "Gura",
-      links: [
-        {
-          title: "Document Link",
-          url: "https://www.notion.so/",
-        },
-      ],
-      tags: ["Web"],
-    },
-    {
-      id: "task-4",
-      os: ["ios"],
-      title: "Cook dinner",
-      date: new Date(),
-      content: "Pilot version with Lottie",
-      owner: "Sathish",
-      links: [
-        {
-          title: "Document Link",
-          url: "https://www.notion.so/",
-        },
-      ],
-      tags: ["Desktop"],
-    },
-  ],
-  columns: [
-    {
-      id: "column-1",
-      title: "To do",
-      taskIds: ["task-1", "task-2", "task-3", "task-4"],
-    },
-    {
-      id: "column-2",
-      title: "In progress",
-      taskIds: [],
-    },
-    {
-      id: "column-3",
-      title: "Done",
-      taskIds: [],
-    },
-  ],
-  columnOrder: ["column-1", "column-2", "column-3"],
-};
+import initialData from "./mocks/board";
 
 function App() {
   const { tasks } = initialData;
-
   const [columnOrder, setColumnOrder] = useState(initialData.columnOrder);
   const [columns, setColumns] = useState(initialData.columns);
 
@@ -103,7 +20,7 @@ function App() {
       return;
     }
 
-    const target = columns.find(propEq("id", source.droppableId))?.taskIds[
+    const target = columns.find(propEq("id", source.droppableId))?.taskIDs[
       source.index
     ];
 
@@ -116,21 +33,21 @@ function App() {
             () => source.droppableId === destination.droppableId,
             (col) => ({
               ...col,
-              taskIds: move(source.index, destination.index, col.taskIds),
+              taskIDs: move(source.index, destination.index, col.taskIDs),
             }),
           ],
           [
             (col) => col.id === source.droppableId,
             (col) => ({
               ...col,
-              taskIds: remove(source.index, 1, col.taskIds),
+              taskIDs: remove(source.index, 1, col.taskIDs),
             }),
           ],
           [
             (col) => col.id === destination.droppableId,
             (col) => ({
               ...col,
-              taskIds: insert(destination.index, target, col.taskIds),
+              taskIDs: insert(destination.index, target, col.taskIDs),
             }),
           ],
           [T, identity],
@@ -154,7 +71,7 @@ function App() {
                 (column, index) =>
                   column && (
                     <Column key={column.id} index={index} {...column}>
-                      {column.taskIds
+                      {column.taskIDs
                         .map((id) => tasks.find(propEq("id", id)))
                         .map(
                           (task, index) =>

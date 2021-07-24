@@ -2,31 +2,14 @@ import { Draggable } from "react-beautiful-dnd";
 import { format } from "date-fns";
 import ownerSvg from "../assets/images/owner.svg";
 import linkSvg from "../assets/images/link.svg";
+import clsx from "clsx";
+import { Task as ITask } from "../types/board";
 
-type Props = {
-  id: string;
+type Props = ITask & {
   index: number;
-  os: Array<string>;
-  title: string;
-  date: Date;
-  content: string;
-  owner: string;
-  links: { title: string; url: string }[];
-  tags: string[];
 };
 
 export function Task({ id, index, ...task }: Props) {
-  let osList = task.os.map((item) => (
-    <span
-      key={index}
-      className={`rounded-md py-0.5 px-1 mr-2 
-    ${item == "ios" ? "bg-black" : ""} 
-    ${item == "Web" ? "bg-blue-web" : ""} 
-    ${item == "Desktop" ? "bg-brown" : ""}`}
-    >
-      {item}
-    </span>
-  ));
   return (
     <Draggable draggableId={id} index={index}>
       {({ draggableProps, dragHandleProps, innerRef }) => (
@@ -36,17 +19,28 @@ export function Task({ id, index, ...task }: Props) {
           {...dragHandleProps}
           ref={innerRef}
         >
-          <p className="flex gap-2 text-white">
-            {task.tags.map((tag) => (
-              <span className="bg-blue rounded-md py-0.5 px-2">{tag}</span>
+          <header>
+            {task.tags.map((item) => (
+              <span
+                key={item}
+                className={clsx(
+                  `rounded-md py-0.5 px-1 mr-2 text-white`,
+                  item === "ios" && "bg-black",
+                  item === "Web" && "bg-blue-web",
+                  item === "Desktop" && "bg-brown"
+                )}
+              >
+                {item}
+              </span>
             ))}
-          </p>
-          <header className="flex justify-between items-end">
-            <strong className="text-base text-black font-medium">
-              {task.title}
-            </strong>
 
-            <span>{format(task.date, "MMM dd")}</span>
+            <div className="flex justify-between items-end">
+              <strong className="text-base text-black font-medium">
+                {task.title}
+              </strong>
+
+              <span>{format(task.date, "MMM dd")}</span>
+            </div>
           </header>
 
           <p className="text-xs">{task.content}</p>
@@ -54,7 +48,7 @@ export function Task({ id, index, ...task }: Props) {
           <footer className="flex flex-col gap-2">
             <ul className="underline">
               {task.links.map((link) => (
-                <li className="">
+                <li key={link.title}>
                   <a className="flex gap-1 items-center" href={link.url}>
                     <img src={linkSvg} alt="" />
                     {link.title} →
